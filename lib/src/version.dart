@@ -126,10 +126,17 @@ class Version implements Comparable<Version>, VersionConstraint {
     try {
       int major = int.parse(match[1]);
       int minor = int.parse(match[2]);
-      int patch = int.parse(match[3]);
 
-      String preRelease = match[5];
-      String build = match[8];
+      // Patch may not be specified in the version. Default to 0.
+      int patch = 0;
+
+
+      if (match[4] != null) {
+        patch= int.parse(match[4]);
+      }
+
+      String preRelease = match[6];
+      String build = match[9];
 
       return new Version._(major, minor, patch, preRelease, build, text);
     } on FormatException catch (ex) {
